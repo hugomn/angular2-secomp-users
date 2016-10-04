@@ -1,10 +1,7 @@
 
 import { Component } from '@angular/core';
 
-export class User {
-    id: number;
-    name: string;
-}
+import { User } from './user';
 
 const USERS: User[] = [
   { id: 11, name: 'Joaozinho' },
@@ -31,14 +28,7 @@ const USERS: User[] = [
         <span class="badge">{{user.id}}</span> {{user.name}}
       </li>
     </ul>
-    <div *ngIf="selectedUser">
-      <h2>Detalhes do usuário {{selectedUser.name}}!</h2>
-      <div><label>id: </label>{{selectedUser.id}}</div>
-      <div>
-        <label>name: </label>
-        <input [(ngModel)]="selectedUser.name" placeholder="name"/>
-      </div>
-    </div>
+    <user-detail [user]="selectedUser"></user-detail>
   `,
   styles: [`
   .selected {
