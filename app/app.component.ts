@@ -1,20 +1,9 @@
-
 import { Component } from '@angular/core';
+import { OnInit } from '@angular/core';
 
 import { User } from './user';
 
-const USERS: User[] = [
-  { id: 11, name: 'Joaozinho' },
-  { id: 12, name: 'Pedro' },
-  { id: 13, name: 'Marcelo' },
-  { id: 14, name: 'Gabriela' },
-  { id: 15, name: 'Paulinho' },
-  { id: 16, name: 'Maria' },
-  { id: 17, name: 'Bruna' },
-  { id: 18, name: 'Júlia' },
-  { id: 19, name: 'Celso' },
-  { id: 20, name: 'Juca' }
-];
+import { UserService } from './user.service';
 
 @Component({
     selector: 'my-app',
@@ -78,13 +67,21 @@ const USERS: User[] = [
     margin-right: .8em;
     border-radius: 4px 0 0 4px;
   }
-`]
+`],
+    providers: [UserService]
 })
 export class AppComponent {
+    constructor(private userService: UserService) {};
     selectedUser: User;
     title = 'Cadastro de usuários - II Secomp';
-    users = USERS;
+    users: User[];
     onSelect(user: User): void {
         this.selectedUser = user;
+    }
+    getUsers(): void {
+        this.userService.getUsers().then(users => this.users = users);
+    }
+    ngOnInit(): void {
+        this.getUsers();
     }
 }
