@@ -1,27 +1,100 @@
 
 import { Component } from '@angular/core';
 
-export class Student {
+export class User {
     id: number;
     name: string;
 }
 
+const USERS: User[] = [
+  { id: 11, name: 'Joaozinho' },
+  { id: 12, name: 'Pedro' },
+  { id: 13, name: 'Marcelo' },
+  { id: 14, name: 'Gabriela' },
+  { id: 15, name: 'Paulinho' },
+  { id: 16, name: 'Maria' },
+  { id: 17, name: 'Bruna' },
+  { id: 18, name: 'Júlia' },
+  { id: 19, name: 'Celso' },
+  { id: 20, name: 'Juca' }
+];
+
 @Component({
     selector: 'my-app',
-    template:`
-  <h1>{{title}}</h1>
-  <h2>{{student.name}} details!</h2>
-  <div><label>id: </label>{{student.id}}</div>
-  <div>
-    <label>name: </label>
-    <input [(ngModel)]="student.name" placeholder="name">
-  </div>
-  `
+    template: `
+    <h1>{{title}}</h1>
+    <h2>Usuários</h2>
+    <ul class="users">
+      <li *ngFor="let user of users"
+        [class.selected]="user === selectedUser"
+        (click)="onSelect(user)">
+        <span class="badge">{{user.id}}</span> {{user.name}}
+      </li>
+    </ul>
+    <div *ngIf="selectedUser">
+      <h2>Detalhes do usuário {{selectedUser.name}}!</h2>
+      <div><label>id: </label>{{selectedUser.id}}</div>
+      <div>
+        <label>name: </label>
+        <input [(ngModel)]="selectedUser.name" placeholder="name"/>
+      </div>
+    </div>
+  `,
+  styles: [`
+  .selected {
+    background-color: #CFD8DC !important;
+    color: white;
+  }
+  .users {
+    margin: 0 0 2em 0;
+    list-style-type: none;
+    padding: 0;
+    width: 15em;
+  }
+  .users li {
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    background-color: #EEE;
+    margin: .5em;
+    padding: .3em 0;
+    height: 1.6em;
+    border-radius: 4px;
+  }
+  .users li.selected:hover {
+    background-color: #BBD8DC !important;
+    color: white;
+  }
+  .users li:hover {
+    color: #607D8B;
+    background-color: #DDD;
+    left: .1em;
+  }
+  .users .text {
+    position: relative;
+    top: -3px;
+  }
+  .users .badge {
+    display: inline-block;
+    font-size: small;
+    color: white;
+    padding: 0.8em 0.7em 0 0.7em;
+    background-color: #607D8B;
+    line-height: 1em;
+    position: relative;
+    left: -1px;
+    top: -4px;
+    height: 1.8em;
+    margin-right: .8em;
+    border-radius: 4px 0 0 4px;
+  }
+`]
 })
 export class AppComponent {
+    selectedUser: User;
     title = 'Cadastro de usuários - II Secomp';
-    student: Student = {
-        id: 1,
-        name: 'Joaozinho'
-    };
+    users = USERS;
+    onSelect(user: User): void {
+        this.selectedUser = user;
+    }
 }
