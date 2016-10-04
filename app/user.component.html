@@ -1,8 +1,13 @@
 <h2>Usuários</h2>
+<div>
+  <label>Nome:</label> <input #userName />
+  <button (click)="add(userName.value); userName.value=''">Adicionar</button>
+</div>
 <ul class="users">
   <li *ngFor="let user of users"
-    [class.selected]="user === selectedUser"
     (click)="onSelect(user)">
     <span class="badge">{{user.id}}</span> {{user.name}}
+    <button class="delete"
+      (click)="delete(user); $event.stopPropagation()">x</button>
   </li>
 </ul>

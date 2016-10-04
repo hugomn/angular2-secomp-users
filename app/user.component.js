@@ -17,6 +17,25 @@ var UserComponent = (function () {
         this.userService = userService;
     }
     ;
+    UserComponent.prototype.add = function (name) {
+        var _this = this;
+        name = name.trim();
+        if (!name) {
+            return;
+        }
+        this.userService.create(name)
+            .then(function (user) {
+            _this.users.push(user);
+        });
+    };
+    UserComponent.prototype.delete = function (user) {
+        var _this = this;
+        this.userService
+            .delete(user.id)
+            .then(function () {
+            _this.users = _this.users.filter(function (u) { return u !== user; });
+        });
+    };
     UserComponent.prototype.onSelect = function (user) {
         this.router.navigate(['/detail', user.id]);
     };
