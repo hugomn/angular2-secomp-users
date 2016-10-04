@@ -1,0 +1,9 @@
+<div *ngIf="user">
+  <h2>Detalhes do usuário {{user.name}}!</h2>
+  <div><label>id: </label>{{user.id}}</div>
+  <div>
+    <label>name: </label>
+    <input [(ngModel)]="user.name" placeholder="name"/>
+  </div>
+  <button (click)="goBack()">Voltar</button>
+</div>
